@@ -7,7 +7,6 @@ import sys
 exec(open('patFunctions.py').read())	# Opens a file that contains created functions pertaining to this script
 
 count = 0
-
 while True:
 	file = input('Enter filename:\n')+'.txt'
 	count += 1
@@ -22,13 +21,8 @@ percent = input('Enter the percent of the data which you would like to be set as
 
 f = open(file,'r')
 
-data = []
-N1 = 0
-N2 = 0
-classError = 0
-C1 = []
-C2 = []
-sampleSize = 0
+data,C1,C2 = [],[],[]
+classError, sampleSize, N1, N2 = 0,0,0,0
 
 # Goal is to solve for N1,N2,PC1,PC2,
 
@@ -51,7 +45,8 @@ for line in f.readlines():
 		classError += 1
 
 if sampleSize != N1+N2:
-	print('Your data is whack')
+	print('Your data is whack.')
+	sys.exit()
 
 PC1 = N1/sampleSize
 PC2 = N2/sampleSize
@@ -66,3 +61,10 @@ mu2 = average(C2,N2)
 
 print(mu1,len(mu2),'\n')
 print(mu2,len(mu2),'\n')
+
+sigma1 = np.std(C1,axis=1)
+sigma2 = np.std(C2,axis=1)
+
+print(sigma1)
+print(sigma2)
+
