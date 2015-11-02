@@ -80,78 +80,141 @@ mu2 = average(C2,N2)
 
 #where Xn is an element in class1 from n = 0 to range of C1
 
-print("This is C1[0 , 0]")
-print(C1[0,0])
-
-print("This is c1[0, 129]")
-print(C1[0, 129])
-
-print("This is C1 at position 0")
-print (C1 [0][:])
-
-print("This is C1 at position 1")
-print(C1[1][:])
-
-cuanto0 = 0
-
-for item in C1[0]:
-	cuanto0 = cuanto0 + 1 
-
-print ("Cuanto in C1[0] is: ")
-print (cuanto0)
-
-cuanto1 = 0
-for item in C1[1]:
-	cuanto1 = cuanto1 + 1 
-
-print ("Cuanto in C1[1] is: ")
-print (cuanto1)
 
 
-cuanto2 = 0
-for item in C1[2]:
-	cuanto2 = cuanto2 + 1 
+tempArray = C1[0][:]
+print("This is temp array: ")
+print(tempArray)
 
-print ("Cuanto in C1[2] is: ")
-print (cuanto2)
+print("This is mu1[0]:")
+print(mu1[0])
 
-cuanto3 = 0
-for item in C1[3]:
-	cuanto3 = cuanto3 + 1 
-
-print ("Cuanto in C1[3] is: ")
-print (cuanto3)
-
-print("This mess is huge: ")
-print(C1.shape)
-
-newList = []
-thing11 = []
-thing1 = []
+#hold on
+tempArray = tempArray - mu1[0]
+print("This is tempArray after subtraction: ")
+print(tempArray)
 
 
-for item in range(0, 129):
-	newList.append(C1[0][item])
-	thing11.append(newList[item] - mu1)
+#matrixProduct = tempArray*tempArray.T
+#print("This is the matix product  ")
+#print(matrixProduct)
+#^^this no good
+
+#since we are actually taking the dot product with ourselves...
+#let us use numpy.dot
+#mucho mas facil creo
+
+matrixProduct = np.dot(tempArray, tempArray)
+print("This is matrix product: ")
+print(matrixProduct)
+
+#yaaaaa!!!
 
 
-print ("This is newList: ")
-print(newList)
+#ok now to build the loop for all of class1:
 
-print("This is thing11: ")
-#print(thing11)
+counter = 0
+S1 = 0
+
+while counter < 12:
+	tempArray = C1[counter][:]
+	tempArray = tempArray - mu1[counter]
+	matrixProduct = np.dot(tempArray, tempArray)
+	S1 = S1 + matrixProduct
+	counter = counter + 1 
+
+print("This is S1: ")	
+print(S1)
+
+#does happy dance for 5 seconds
+
+
+#ok now to rebuild for all of C2
+
+print("This is the size of class 2: ")
+print(C2.shape)
+
+#okay
+
+print("This is the size of mu2: ")
+print(mu2)
+
+#looks like same code will work
+#derpity derp. 
+
+counter = 0
+S2 = 0
+
+while counter < 12:
+	tempArray = C2[counter][:]
+	tempArray = tempArray - mu2[counter]
+	matrixProduct = np.dot(tempArray, tempArray)
+	S2 = S2 + matrixProduct
+	counter = counter + 1 
+
+print("This is S2: ")	
+print(S2)
+
+
+#now to finish the hard coded bit...robinson suggests to divide by respective N1 and N2
+#okey doke
+
+S1 = S1/N1
+S2 = S2/N2
+
+print("This is S1: ")
+print(S1)
+
+print("This is S2: ")
+print(S2)
+
+
+
+# kewwwl, so this should match with the results from std in the numpy routines
+
+#final bit is to build the giant S equation as mentioned in the book:
+
+#S = N1/#pat * S1  + N2/#pat* S2
+
+#kk
+
+numPatterns = N1+N2
+
+bigS = ((N1/numPatterns)*S1) + ((N2/numPatterns)*S2)
+
+print("This is bigS: ")
+print(bigS)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#print(thing11) 
 	#sigh. fix this with psuedo code
 
 
 # posible si usamos dos for loops....
+#don't do this, creates giant mess:
+#for row in range(0,11):
+	#for column in range(0, 129):
+		#thing1.append((C1[row][column])-mu1[row])
 
-for row in range(0,11):
-	for column in range(0, 129):
-		thing1.append((C1[row][column])-mu1[row])
+#thing1 = np.array(thing1)
 
-thing1 = np.array(thing1)
-
-print("this is shape of thing1 ")
-print(thing1.shape)
+#print("this is shape of thing1 ")
+#print(thing1.shape)
 
 
